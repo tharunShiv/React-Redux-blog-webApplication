@@ -1,15 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { User } from "./User";
-import { Main } from "./Main";
+import { User } from "../components/User";
+import { Main } from "../components/Main";
+
+import { setName } from "../actions/userActions";
 
 export class App extends React.Component {
   render() {
     return (
       <div className="container">
         <h1>Hello</h1>
-        <Main changeUsername={() => this.props.setName("nandi")} />
+        <Main changeUsername={name => this.props.setName(name)} />
         <User username={this.props.user.name} />
       </div>
     );
@@ -20,8 +22,8 @@ export class App extends React.Component {
 // use the keys such as user and math in the component properties
 const mapStateToProps = state => {
   return {
-    user: state.userReducer,
-    math: state.mathReducer
+    user: state.user,
+    math: state.math
   };
 };
 
@@ -29,10 +31,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setName: name => {
-      dispatch({
-        type: "SET_NAME",
-        payload: name
-      });
+      dispatch(setName(name));
     }
   };
 };
