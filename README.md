@@ -1,3 +1,5 @@
+## Folder: Redux Example
+
 The purpose:
 In react , we have components which have their own state, say we have form components, states which hold the value of each field..
 
@@ -62,3 +64,30 @@ Steps:
 24. Now how do we use this new post? we will add it to the list of posts
 25. using another lifecycle method: componentWillReceiveProps
     Note: the id will not be unique here.
+
+## Folder: ReactJs - Redux - basics
+
+The problem with bigger apps where we have a lot of component interactions.
+Redux is the solution to this problem and helps in managing the application state.
+
+`npm start`
+
+The process:
+The view/app dispatches the action, the reducer handles the action, changes state, the state is stored in the state and the new state is pass the state to the registered view/app
+
+Steps:
+
+1. Install redux
+   npm install redux --save
+
+2. index.js: import createStore
+   refer index.js only redux code
+
+3. create Store
+4. Tell who's responsible to handle the actions i.e., the reducer, give the initial state
+5. define the reducer using switch statements
+6. return the state
+7. dispatch actions
+8. it will perform step3, step 4
+9. subscribe to the state value change in the store
+10. handle that data, which is the latest data in the store.
