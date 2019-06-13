@@ -11,7 +11,7 @@ export class App extends React.Component {
     return (
       <div className="container">
         <h1>Hello</h1>
-        <Main changeUsername={name => this.props.setName(name)} />
+        <Main changeUsername={() => this.props.setName("paru")} />
         <User username={this.props.user.name} />
       </div>
     );
