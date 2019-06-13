@@ -32,20 +32,55 @@
 
 import { createStore } from "redux";
 
+const initialState = {
+  result: 1,
+  lastValues: [],
+  username: "shiv"
+};
+
 // it takes 2 args
 // the first argument is the reducer we want to use,
 // we can use multiple reducer
 // a reducer takes an action and changes the state
 // the second argument takes the initial application state
 
-const reducer = (state, action) => {
+// the first time we set up our store and no initial state is sent, initialState is sent
+
+const reducer = (state = initialState, action) => {
   // we typically want to determine which action occured
   switch (action.type) {
     case "ADD":
-      state = state + action.payload;
+      //   state = state + action.payload;
+      //   state.result += action.payload;
+      /**
+       * If you directly change it like this,
+       * then it will change it in the memory and the same memory
+       * location is changed.
+       * hence the result value of previous states are also changed to the
+       * recent ones.
+       * so we will follow another approach
+       */
+      // we will create a new state
+      // and use all teh properties of the old state
+      // DONT DO THIS>> WIL NOT WORK FOR lastValues
+      //   state = {
+      //     ...state
+      //   };
+      //   state.result += action.payload;
+      // DO THIS
+      state = {
+        ...state,
+        result: state.result + action.payload,
+        lastValues: [...state.lastValues, action.payload]
+      };
+
       break;
     case "SUBTRACT":
-      state = state - action.payload;
+      state = {
+        ...state,
+        result: state.result - action.payload,
+        lastValues: [...state.lastValues, action.payload]
+      };
       break;
   }
 
@@ -54,7 +89,9 @@ const reducer = (state, action) => {
   return state;
 };
 
-const store = createStore(reducer, 1);
+// since we are initializing state in the above arguments
+// const store = createStore(reducer, 1);
+const store = createStore(reducer);
 
 // the call back function is run everytime the store is updated
 store.subscribe(() => {
@@ -68,5 +105,15 @@ store.subscribe(() => {
 // payload is the data to use for the state
 store.dispatch({
   type: "ADD",
+  payload: 10
+});
+
+store.dispatch({
+  type: "ADD",
+  payload: 10
+});
+
+store.dispatch({
+  type: "SUBTRACT",
   payload: 10
 });
