@@ -30,13 +30,7 @@
 
 // render(<App />, window.document.getElementById("app"));
 
-import { createStore } from "redux";
-
-const initialState = {
-  result: 1,
-  lastValues: [],
-  username: "shiv"
-};
+import { createStore, combineReducers } from "redux";
 
 // it takes 2 args
 // the first argument is the reducer we want to use,
@@ -46,7 +40,14 @@ const initialState = {
 
 // the first time we set up our store and no initial state is sent, initialState is sent
 
-const reducer = (state = initialState, action) => {
+const mathReducer = (
+  state = {
+    result: 1,
+    lastValues: [],
+    username: "shiv"
+  },
+  action
+) => {
   // we typically want to determine which action occured
   switch (action.type) {
     case "ADD":
@@ -89,9 +90,32 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
+const userReducer = (
+  state = {
+    name: "shiv",
+    age: 20
+  },
+  action
+) => {
+  switch (action.type) {
+    case "SET_NAME":
+      state = {
+        ...state,
+        name: action.payload
+      };
+      break;
+    case "SET_AGE":
+      state = {
+        ...state,
+        age: action.payload
+      };
+      break;
+  }
+  return state;
+};
 // since we are initializing state in the above arguments
 // const store = createStore(reducer, 1);
-const store = createStore(reducer);
+const store = createStore(combineReducers({ mathReducer, userReducer }));
 
 // the call back function is run everytime the store is updated
 store.subscribe(() => {
@@ -116,4 +140,9 @@ store.dispatch({
 store.dispatch({
   type: "SUBTRACT",
   payload: 10
+});
+
+store.dispatch({
+  type: "SET_AGE",
+  payload: 22
 });

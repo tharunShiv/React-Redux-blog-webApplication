@@ -91,3 +91,11 @@ Steps:
 8. it will perform step3, step 4
 9. subscribe to the state value change in the store
 10. handle that data, which is the latest data in the store.
+
+Multiple Reducers:
+we can have multiple reducers BUT
+we cannot supply multiple reducers with the createStore.
+instead, we have to import combineReducers and use it
+
+and dispatch as usual..
+make sure to use unique action names
