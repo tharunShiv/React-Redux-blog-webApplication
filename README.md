@@ -99,3 +99,9 @@ instead, we have to import combineReducers and use it
 
 and dispatch as usual..
 make sure to use unique action names
+
+Redux Middleware:
+goes in between actions and reducers
+
+mostly 3rd party middlewares are used
+ex: npm-logger

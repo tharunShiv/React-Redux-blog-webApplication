@@ -30,8 +30,8 @@
 
 // render(<App />, window.document.getElementById("app"));
 
-import { createStore, combineReducers } from "redux";
-
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
 // it takes 2 args
 // the first argument is the reducer we want to use,
 // we can use multiple reducer
@@ -113,16 +113,34 @@ const userReducer = (
   }
   return state;
 };
+
+// its many fat arrow functions coupled each returns a function
+// and uses the previously returned function
+const myLogger = store => next => action => {
+  console.log("Logged action:", action);
+  // next is a method provided by redux pattern
+  // if next is not called , teh action is not travelling to the store
+  // and will fail.
+  next(action);
+};
+
+//
+
 // since we are initializing state in the above arguments
 // const store = createStore(reducer, 1);
-const store = createStore(combineReducers({ mathReducer, userReducer }));
+const store = createStore(
+  combineReducers({ mathReducer, userReducer }),
+  {},
+  applyMiddleware(myLogger, createLogger())
+);
 
 // the call back function is run everytime the store is updated
 store.subscribe(() => {
   console.log("Store Updated", store.getState());
 });
 
-// dispatchin actions
+// dispatchin actionsls
+
 // actions are dispatched to the store and store sends it to the reducer, andn doesnt handle it
 
 // the dispatch expects a jS action
